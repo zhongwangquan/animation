@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+</head>
+<body>
+  <canvas id="demo2" width="650" height="400"></canvas>
+</body>
+</html>
+<script>
+  window.onload = () => {
+    /**
+      * Graphics Class 绘图类 -- demo
+      * 用于生成矢量绘图指令
+      */
+    let stage2 = new createjs.Stage('demo2')
+
+    // 画线
+    let g = new createjs.Graphics();
+    /* 同一个 Graphics 实例， 可以多次绘制，以下线段、折线都是用 g 实例绘制的*/
+    g.setStrokeStyle(10).beginStroke("#d23c4f").moveTo(400,10).lineTo(600,100)
+    // 简写形式
+    g.ss(20).s('#fafa35').mt(400,100).lt(400,260)
+    // 多点折线的简写形式
+    g.ss(1).s('#000').mt(600,400).lt(600, 200).lt(400,300).lt(500, 550)
+
+    // Graphics 实例不能直接 addChild() 到舞台 stage 中，实例化为 Shape 实例后才可以
+    let line = new createjs.Shape(g)
+
+    // 圆
+    let g1 = new createjs.Graphics();
+    g1.setStrokeStyle(1);         // 描边
+    g1.beginStroke("#000000");    // 描边颜色
+    g1.beginFill("red");          // 图形填充
+    g1.drawCircle(0,0,100);        // 绘制 (X, X, R)
+    let c1 = new createjs.Shape(g1)     // 实例化Shape对象
+
+    // 矩形
+    let g2 = new createjs.Graphics().beginStroke("red").beginFill("blue").drawRect(150, 0, 200, 100);     // X, Y, W, H
+    let c2 = new createjs.Shape(g2)
+
+    // 命令对象
+    let g3 = new createjs.Graphics();
+    // 每个图形接口调用后会生成一个命令对象，可以使用.command访问，它保存对已创建或附加的最后一个命令的引用
+    let fillCommand = g3.beginFill("green").command;
+    g3.drawCircle(200,200,50);        // 绘制 (X, X, R)
+    let c3 = new createjs.Shape(g3);
+
+    // 一些异步操作后，更新填充样式/颜色:
+    setTimeout(() => {
+      fillCommand.style = "gray";
+      stage2.update();                // 不更新舞台，不会重新渲染
+    }, 2000);
+
+    // 点击事件
+    //c3.addEventListener('click', () => {
+    // alert(123)
+    // fillCommand.style = "gray";
+    // stage2.update();          // 不更新舞台，不会重新渲染
+    //})
+  
+    stage2.addChild(c1, c2, c3, line);
+    stage2.update();
+  }
+</script>
+
