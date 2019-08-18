@@ -40,8 +40,11 @@
     let c1 = new createjs.Shape(g1)     // 实例化Shape对象
 
     // 矩形
-    let g2 = new createjs.Graphics().beginStroke("red").beginFill("blue").drawRect(150, 0, 200, 100);     // X, Y, W, H
-    let c2 = new createjs.Shape(g2)
+    // let g2 = new createjs.Graphics().beginStroke("red").beginFill("blue").drawRect(150, 0, 200, 100);     // X, Y, W, H
+    // let c2 = new createjs.Shape(g2)
+
+    let c2 = new createjs.Shape()
+    c2.graphics.beginStroke("red").beginFill("blue").drawRect(150, 0, 200, 100);     // X, Y, W, H
 
     // 命令对象
     let g3 = new createjs.Graphics();
